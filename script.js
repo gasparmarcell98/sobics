@@ -296,6 +296,7 @@ function WhichButton(event)
     }
 }
 
+//timer 
 function timer()
 {
     var counter = 30;
