@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sobics</title>
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <audio id="myAudio">
+        <source src="Coconut_Milk.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="eventsound">
+        <source src="zene.mp3" type="audio/mpeg">
+    </audio>
+<div>
+  <span id="timer">
+    <span id="time">30</span>Seconds      
+  </span>
+</div>
+<div id="sobicsgamearea" onmousedown="WhichButton(event)" onclick="playeventSound()"></div>
+<p></p>
+<div id="start_field">
+ <center>
+    <br>
+    <label>Név:</label>
+        <input type="text" id="name"><br>
+    <p></p>
+        <input type="button" value="START" id="start_button" onclick="playAudio()">
+ </center>
+</div>
+    <script>
+        var x = document.getElementById("myAudio"); 
+
+        function playAudio() 
+        { 
+            x.play(); 
+        } 
+
+        var event=document.getElementById("eventsound");
+
+        function playeventSound()
+        {
+           event.play(); 
+        }
+
+        
+    </script>
+</body>
+</html>
