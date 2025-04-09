@@ -79,7 +79,7 @@ function init_character() {
         width: def_width,
     });
 
-    // a karakter magassaga melyet meg kellet adni
+    // a karakter magassaga
     def_height = parseInt(character.css('height'));
 
     // az karakter y poziciojanak beallitasa
