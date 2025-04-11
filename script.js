@@ -30,7 +30,7 @@ let block;
 
 let moving_block = $('<div class="blokk"></div>');
 
-$(document).ready(function () 
+$(document).ready(function () //ez egy main függvénynek felel meg, tehát itt kezdődik a program futása
 { 	
     $("#start_button").on("click", function () 
     {
@@ -41,7 +41,7 @@ $(document).ready(function ()
 
         $("#start_field").hide(); 
 
-        timer();
+        timer(); // 
 
         sobics_game_area = $('#sobicsgamearea');
         character = $('<img src="sobics.png" id="character">'); 
@@ -144,7 +144,7 @@ function mousemove_character(e) {
 }
 
 function mousemove_block(e) {
-    let div_pos = sobics_game_area.offset();
+    let div_pos = sobics_game_area.offset(); // az offset függvény ami kiszámítja egy elem távolságát a bal felső saroktól
     let mouse_pos_x = Math.ceil(e.clientX - div_pos.left - move_step);
 
     if (mouse_pos_x > 0 && mouse_pos_x < ga_width - def_width) {  
