@@ -39,9 +39,9 @@ $(document).ready(function () //ez egy main függvénynek felel meg, tehát itt 
             jatekos_nev=document.getElementById("name").value;
         }
 
-        $("#start_field").hide(); 
+        $("#start_field").hide();
 
-        timer(); // 
+        timer();
 
         sobics_game_area = $('#sobicsgamearea');
         character = $('<img src="sobics.png" id="character">'); 
@@ -67,7 +67,7 @@ $(document).ready(function () //ez egy main függvénynek felel meg, tehát itt 
         random_color(); 
 
         // a leszedett téglalapot mozgatja
-        sobics_game_area.on('mousemove', mousemove_block);        
+        sobics_game_area.on('mousemove', mousemove_block);      
 
     });
 });
@@ -88,7 +88,8 @@ function init_character() {
     });
 }
 
-function move_character(ev) {
+// ez a függvény a billentyűzet lenyomását nézi
+function move_character(ev) {      
     // lenyomott billentyu
     let pressed_key = ev.key;
     // ha a lenyomott billentyu a jobbra nyil
@@ -132,7 +133,7 @@ function move_character(ev) {
     }
 }
 
-function mousemove_character(e) {
+function mousemove_character(e) {               
     let div_pos = sobics_game_area.offset();
     let mouse_pos_x = Math.ceil(e.clientX - div_pos.left - move_step);
 
@@ -143,9 +144,10 @@ function mousemove_character(e) {
     }
 }
 
+// ez a fügvény konkrétan azt számolja ki, hogy a blokk együtt mozogjon a karakterrel
 function mousemove_block(e) {
-    let div_pos = sobics_game_area.offset(); // az offset függvény ami kiszámítja egy elem távolságát a bal felső saroktól
-    let mouse_pos_x = Math.ceil(e.clientX - div_pos.left - move_step);
+    let div_pos = sobics_game_area.offset();        // az offset függvény ami kiszámítja egy elem távolságát a bal felső saroktól
+    let mouse_pos_x = Math.ceil(e.clientX - div_pos.left - move_step); // Math.ceil: a benne lévő értéket felfelé kerekíti
 
     if (mouse_pos_x > 0 && mouse_pos_x < ga_width - def_width) {  
         moving_block.css({
@@ -154,7 +156,7 @@ function mousemove_block(e) {
     }
 }
 
-function random_color() 
+function random_color()
 {
     for (let i = 0; i < N1; i++) 
     {
@@ -180,7 +182,7 @@ function random_color()
                 block.addClass('vilagoskek');
             }
         
-            block.css({
+            block.css({         // blokk méretei
                 width: 60,
                 height: 30,
                 top: i * 30,
@@ -192,7 +194,7 @@ function random_color()
     }
 }
 
-function WhichButton(event) 
+function WhichButton(event)
 {
     let legkozelebb_top = 900000;
     let legkozelebb_left = 900000;
@@ -205,9 +207,9 @@ function WhichButton(event)
     let leszedem_legnagyobb_y=0;
 
 
-    switch (event.button)
+    switch (event.button) // itt minden a blokkokra vonatkozik egér lenyomásra
     {
-        case 0:
+        case 0:                                    // bal gomb, azaz a blokk lekérése
             $(".blokk").each(function() {
                 let position_block = $(this).position();
                 //let aktualis_tavolsag_top = position_character.top - position_block.top;
@@ -247,7 +249,7 @@ function WhichButton(event)
             });
             break;
         
-        case 1:
+        case 2:                                           // egéren lévő jobb gomb
             moving_block.top=position_character.top - 30;
             moving_block.left=position_character.left;
 
@@ -261,7 +263,6 @@ function WhichButton(event)
                     kozepso_legkozelebb = Math.abs(aktualis_tavolsag_left);
                     kozepso_legkozelebb_x = position_block.left;
                 }
-
             });
 
             $(".blokk").each(function() {
@@ -296,16 +297,16 @@ function WhichButton(event)
     }
 }
 
-//timer 
+// az időzítő 60 másodpercről számol visszafele, majd egy olyan szöveget kell majd ki íratni, ami csak annyit mutat, hogy vége a játéknak
 function timer()
 {
-    var counter = 30;
+    var counter = 60;
         var interval = setInterval(function() {
             counter--;
             if (counter <= 0) {
                 clearInterval(interval);
             $('#timer').html("<h3>Vége a játéknak</h3>");
-            location.reload();  
+            location.reload();
             return;
             }else{
                 $('#time').text(counter);
