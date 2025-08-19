@@ -30,7 +30,7 @@ let block;
 
 let moving_block = $('<div class="blokk"></div>');
 
-$(document).ready(function () //ez egy main függvénynek felel meg, tehát itt kezdődik a program futása
+$(document).ready(function () //ez egy MAIN függvénynek felel meg, tehát itt kezdődik a program futása
 { 	
     $("#start_button").on("click", function () 
     {
@@ -207,12 +207,11 @@ function WhichButton(event)
     let leszedem_legnagyobb_y=0;
 
 
-    switch (event.button) // itt minden a blokkokra vonatkozik egér lenyomásra
+    switch (event.button) //itt minden a blokkokra vonatkozik egér lenyomásra
     {
-        case 0:                                    // bal gomb, azaz a blokk lekérése
+        case 0:                                    //bal gomb, azaz a blokk lekérése
             $(".blokk").each(function() {
                 let position_block = $(this).position();
-                //let aktualis_tavolsag_top = position_character.top - position_block.top;
                 let aktualis_tavolsag_left = position_character.left - position_block.left;
                 
                 if(legkozelebb_left >= Math.abs(aktualis_tavolsag_left))
@@ -249,11 +248,11 @@ function WhichButton(event)
             });
             break;
         
-        case 2:                                           // egéren lévő jobb gomb
+        case 2:                                             // egéren lévő jobb gomb, azaz a blokk visszaküldése
             moving_block.top=position_character.top - 30;
             moving_block.left=position_character.left;
 
-           $(".blokk").each(function() {
+           $(".blokk").each(function() {                    // végigmegyünk minden blokkon
                 let position_block = $(this).position();
                 let aktualis_tavolsag_left = position_character.left - position_block.left; 
                 
@@ -292,9 +291,42 @@ function WhichButton(event)
 
             });
             
-            moving_block = $('<div class="blokk"></div>');
-            break;
+            moving_block = $('<div class="blokk"></div>');      // konkrétan a blokk itt kerül elhelyezésre
+            same_color_blocks_get_delete()                       // ide kell a függvényhívás, hisz mindig akkor akarjuk csekkolni, hogy vannak-e tömbök egymás mellet, mikor 
+            break;                                              // egy tömböt vissza küldünk a többi közé
     }
+}
+
+// blokkok törlése ha minimum 6 van egymás mellett
+function same_color_blocks_get_delete()
+{
+    // az utoljára felküldött blokkra nézem meg, hogy van-e mellette ugyan olyan színű blokk. Ezt úgy valósítom meg, hogy az aktuális poziciót lekérem és ahhoz
+    // képest nézem meg, hogy milyen színek vannak. Minimum még 5 színt kell találni. 
+
+    let moving_pos = moving_block.position();
+    let cycle_position=0;
+    let actual_i=0;
+    let actual_j=0;
+
+    // Itt megkapjuk, hogy hanyadik pozicióban van az a blokk, amelyet felkültünk (konkrétan hanyadik helyen van, pl.: 23. helyen)
+    for (let i = 0; i < 10; i++) // sor 
+    {
+        for (let j = 0; j < 6; j++) // oszlop
+        {
+            let actual_cycle_position = i * 6 + j; // j itt az oszlop, tehát a szorzás jön az oszlopok számával
+            let blokk_pos = $(".blokk").eq(actual_cycle_position).position();
+            
+            // Objektumokat nem lehet '==' - el összehasonlítani
+            if (blokk_pos.top === moving_pos.top && blokk_pos.left === moving_pos.left) 
+            {
+                actual_i = i;
+                actual_j = j;
+            }
+        }  
+    }
+    // Most az jön, hogy elkezdünk vissza lépkedni, hány meg mennyi van egymás felett
+
+
 }
 
 // az időzítő 60 másodpercről számol visszafele, majd egy olyan szöveget kell majd ki íratni, ami csak annyit mutat, hogy vége a játéknak
